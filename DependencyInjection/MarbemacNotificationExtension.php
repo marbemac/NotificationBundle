@@ -25,6 +25,10 @@ class MarbemacNotificationExtension extends Extension
 
         $variables = array(
                         'notification_manager',
+                        'notification_class',
+                        'user_route',
+                        'user_route_parameter',
+                        'max_contributor_show',
                     );
 
         foreach ($variables as $attribute) {

@@ -7,6 +7,11 @@
     <services>
         <service id="marbemac.manager.notification" class="%marbemac_notification.options.notification_manager%">
             <argument type="service" id="doctrine.odm.mongodb.document_manager" />
+            <argument type="service" id="router" />
+            <argument>%marbemac_notification.options.notification_class%</argument>
+            <argument>%marbemac_notification.options.max_contributor_show%</argument>
+            <argument>%marbemac_notification.options.user_route%</argument>
+            <argument>%marbemac_notification.options.user_route_parameter%</argument>
         </service>
     </services>
 

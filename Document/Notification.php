@@ -49,10 +49,20 @@ class Notification
      */
     protected $message;
 
-    /*
-     * @MongoDB\field(type="hash")
+    /**
+     * @MongoDB\EmbedMany(targetDocument="NotificationContributor")
      */
     protected $contributors;
+
+    /**
+     * @MongoDB\field(type="boolean")
+     */
+    protected $unread;
+
+    /**
+     * @MongoDB\field(type="boolean")
+     */
+    protected $active;
 
     /**
      * @MongoDB\Field(type="date", name="ua")
@@ -69,6 +79,9 @@ class Notification
     public function __construct()
     {
         $this->contributors = array();
+        $this->emailed = false;
+        $this->pushed = false;
+        $this->unread = true;
     }
 
     public function getId()
@@ -146,6 +159,39 @@ class Notification
         $this->message = $message;
     }
 
+    public function getUnread()
+    {
+        return $this->unread;
+    }
+
+    public function setUnread($unread)
+    {
+        $this->unread = $unread;
+    }
+
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    public function getActiveContributors()
+    {
+        $contributors = array();
+        foreach ($this->contributors as $key => $contributor)
+        {
+            if ($contributor->getActive())
+            {
+                $contributors[] = $contributor;
+            }
+        }
+        return $contributors;
+    }
+
     public function getContributors()
     {
         return $this->contributors;
@@ -176,6 +222,20 @@ class Notification
     {
         $this->updatedAt = new \DateTime();
     }
+
+    public function getActiveContributorCount()
+    {
+        $count = 0;
+        foreach ($this->contributors as $contributor)
+        {
+            if ($contributor->getActive())
+            {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
 }
 
 /**
@@ -183,55 +243,49 @@ class Notification
  */
 class NotificationContributor
 {
-    /**
-     * @MongoDB\field(type="object_id", name="uid")
-     */
-    protected $contributorId;
+    /* @MongoDB\field(type="object_id", name="uid") */
+    protected $userId;
 
-    /**
-     * @MongoDB\field(type="string", name="name")
-     */
-    protected $contributorName;
+    /* @MongoDB\field(type="string") */
+    protected $name;
 
-    /**
-     * @MongoDB\field(type="boolean")
-     */
+    /* @MongoDB\field(type="boolean") */
     protected $emailed;
 
-    /**
-     * @MongoDB\field(type="boolean")
-     */
+    /* @MongoDB\field(type="boolean") */
     protected $pushed;
 
-    /**
-     * @MongoDB\field(type="date", name="ca")
-     */
+    /* @MongoDB\field(type="date", name="ca") */
     protected $createdAt;
+
+    /* @MongoDB\field(type="boolean") */
+    protected $active;
 
     public function __construct()
     {
         $this->emailed = false;
         $this->pushed = false;
+        $this->active = true;
     }
 
-    public function getContributorId()
+    public function getUserId()
     {
-        return $this->contributorId;
+        return $this->userId;
     }
 
-    public function setContributorId($contributorId)
+    public function setUserId($contributorId)
     {
-        $this->contributorId = $contributorId;
+        $this->userId = $contributorId;
     }
 
-    public function getContributorName()
+    public function getName()
     {
-        return $this->contributorName;
+        return $this->name;
     }
 
-    public function setContributorName($contributorName)
+    public function setName($contributorName)
     {
-        $this->contributorName = $contributorName;
+        $this->name = $contributorName;
     }
 
     public function getEmailed()
@@ -252,6 +306,16 @@ class NotificationContributor
     public function setPushed($pushed)
     {
         $this->pushed = $pushed;
+    }
+
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    public function setActive($active)
+    {
+        $this->active = $active;
     }
 
     public function getCreatedAt()

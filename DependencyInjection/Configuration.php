@@ -27,6 +27,10 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('notification_manager')->defaultValue('Marbemac\NotificationBundle\Document\NotificationManager')->cannotBeEmpty()->end()
+                ->scalarNode('notification_class')->defaultValue('Marbemac\NotificationBundle\Document\Notification')->cannotBeEmpty()->end()
+                ->scalarNode('user_route')->cannotBeEmpty()->end()
+                ->scalarNode('user_route_parameter')->cannotBeEmpty()->end()
+                ->scalarNode('max_contributor_show')->cannotBeEmpty()->end()
             ->end();
 
         return $treeBuilder;

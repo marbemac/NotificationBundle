@@ -1,0 +1,5 @@
+<div id="notificationsC">
+    {% for notification in formattedNotifications %}
+        <div>{{ notification.text|raw }}</div>
+    {% endfor %}
+</div>
