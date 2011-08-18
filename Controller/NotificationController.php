@@ -44,7 +44,8 @@ class NotificationController extends ContainerAware
 
         $today = new \DateTime();
         $userId = $this->container->get('security.context')->getToken()->getUser()->getId();
-        $formattedNotifications = $this->container->get('marbemac.manager.notification')->buildNotifications(array('uid' => $userId, 'active' => true), 10, 0);
+        $formattedNotifications = $this->container->get('marbemac.manager.notification')->buildNotifications(array('uid' => $userId, 'active' => true), 15, 0);
+        $this->container->get('marbemac.manager.notification')->markRead($userId);
 
         if ($this->container->get('request')->isXmlHttpRequest())
         {

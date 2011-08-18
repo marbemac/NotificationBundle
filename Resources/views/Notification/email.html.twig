@@ -1,0 +1,8 @@
+<div style="font-weight: bold; font-size: 16px;">Hi {{ targetUser.fullName }}, you've got {{ notifications|length }} new notifications:</div>
+
+<br />
+
+{% for notification in notifications %}
+    <div>"{{ notification.text|striptags }}"</div>
+    <br />
+{% endfor %}

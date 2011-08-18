@@ -1,0 +1,5 @@
+Hi {{ targetUser.fullName }}, you've got {{ notifications|length }} new notifications:
+
+{% for notification in notifications %}
+    "{{ notification.text|striptags }}",
+{% endfor %}

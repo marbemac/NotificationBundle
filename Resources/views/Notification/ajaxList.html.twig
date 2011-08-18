@@ -1,5 +1,13 @@
 <div id="notificationsC">
+    <h4>Notifications</h4>
+    <ul>
     {% for notification in formattedNotifications %}
-        <div>{{ notification.text|raw }}</div>
+        <li class="{{ notification.unread ? 'unread' : '' }}">
+            <div class="text">{{ notification.text|raw }}</div>
+            <div class="date">{{ notification.timestamp|relativeTime }}</div>
+        </li>
+    {% else %}
+        <li class="none">You have no notifications...</li>
     {% endfor %}
+    </ul>
 </div>

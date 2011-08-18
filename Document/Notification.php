@@ -30,6 +30,16 @@ class Notification
     protected $objectType;
 
     /**
+     * @MongoDB\field(type="string", name="otitle")
+     */
+    protected $objectTitle;
+
+    /**
+     * @MongoDB\field(type="string", name="ourl")
+     */
+    protected $objectUrl;
+
+    /**
      * @MongoDB\Field(type="string")
      */
     protected $type;
@@ -48,7 +58,7 @@ class Notification
      * @MongoDB\field(type="string")
      */
     protected $message;
-
+    
     /**
      * @MongoDB\EmbedMany(targetDocument="NotificationContributor")
      */
@@ -117,6 +127,26 @@ class Notification
     public function setObjectType($objectType)
     {
         $this->objectType = $objectType;
+    }
+
+    public function getObjectTitle()
+    {
+        return $this->objectTitle;
+    }
+
+    public function setObjectTitle($objectTitle)
+    {
+        $this->objectTitle = $objectTitle;
+    }
+
+    public function getObjectUrl()
+    {
+        return $this->objectUrl;
+    }
+
+    public function setObjectUrl($objectUrl)
+    {
+        $this->objectUrl = $objectUrl;
     }
 
     public function getType()
